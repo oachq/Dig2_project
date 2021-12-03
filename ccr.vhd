@@ -5,7 +5,7 @@ library ieee ;
     use IEEE.std_logic_unsigned.all;
     
 entity reg_CCR is
-  port (;
+  port (
     clk:        in std_logic;
     ccrC_in:    in std_logic;
     ccrZ_in:    in std_logic;

@@ -11,8 +11,8 @@ entity reg_PC is
   port (
     clk:        in std_logic;
     pc_arst:    in std_logic;
-    pc_ce:      in std_logic;   --salida ó entradas X
-    pc_inc:     in std_logic;   --salida ó entradas X
+    pc_ce:      in std_logic;   
+    pc_inc:     in std_logic;   
     pc_din:     in std_logic_vector (wl-1 downto 0);
     pc_dout:    out std_logic_vector (wl-1 downto 0)
   ) ;
