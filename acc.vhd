@@ -11,7 +11,7 @@ entity reg_ACC is
     acc_in:     in std_logic_vector (wl-1 downto 0);
     acc_arst:   in std_logic;
     acc_ce:     in std_logic;
-    acc_out:    in std_logic_vector (wl-1 downto 0)
+    acc_out:    out std_logic_vector (wl-1 downto 0)
   ) ;
 end reg_ACC ; 
 
@@ -19,6 +19,7 @@ architecture arch of reg_ACC is
     signal cuenta: std_logic_vector(wl-1 downto 0);
 begin
    process (clk, acc_arst)
+   begin
         if (acc_arst = '1') then
          cuenta  <= (others => '0');
           elsif (rising_edge(clk)) then

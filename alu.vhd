@@ -13,7 +13,7 @@
 library ieee ;
     use ieee.std_logic_1164.all ;
     use ieee.numeric_std.all ;
-    use IEEE.std_logic_arith.all;
+    --use IEEE.std_logic_arith.all;
     use IEEE.std_logic_unsigned.all;
  
 entity alu is
@@ -34,7 +34,7 @@ architecture arch of alu is
     signal cuenta :         std_logic_vector(wl-1 downto 0);
     signal c_Temp, z_temp:  std_logic; 
 begin
-    process(a_in, b_in, s, F)
+    process(a_in, b_in, s, )
     begin
 
     case( s ) is
@@ -42,7 +42,7 @@ begin
         when "000" =>   --NOT ACC'
             cuenta <= not a_in;
             C_temp <= '0';
-                if (cuenta = (a_in and not(a_in))) then
+                if (cuenta = (a_in and not(a_in))) then -- cehcar error del if 
                     z_temp <= '1';
                 else
                     z_temp <= '0';
@@ -50,6 +50,12 @@ begin
 
         when "001" => --ACC and MBR  
             cuenta <= a_in and b_in;
+            if (b_in > not(a_in)) then
+                c_Temp <= '1';
+            else
+                c_Temp <= '0'; 
+            end if ; 
+            
                 if (cuenta = (a_in and not(a_in))) then
                     z_temp <= '1';
                 else
@@ -58,6 +64,12 @@ begin
 
         when "010" =>  --ACC OR MBR
             cuenta <= a_in or b_in;
+            if (b_in > not(a_in)) then
+                c_Temp <= '1';
+            else
+                c_Temp <= '0'; 
+            end if ; 
+
                 if (cuenta = (a_in and not(a_in))) then
                     z_temp <= '1';
                 else
@@ -66,6 +78,12 @@ begin
 
         when "011" =>  --ACC XOR MBR
             cuenta <= a_in xor b_in;
+            if (b_in > not(a_in)) then
+                c_Temp <= '1';
+            else
+                c_Temp <= '0'; 
+            end if ; 
+
                 if (cuenta = (a_in and not(a_in))) then
                     z_temp <= '1';
                 else
@@ -74,7 +92,13 @@ begin
 
         when "100" =>  --ACC << 1
             cuenta <= '0' & a_in(wl-1 downto 1);
-            --c_Temp <= '0';
+            --cuenta <= a_in(wl-1 downto 1) srl 1;
+            if (b_in > not(a_in)) then
+                c_Temp <= '1';
+            else
+                c_Temp <= '0'; 
+            end if ; 
+
                 if (cuenta = (a_in and not(a_in))) then
                     z_temp <= '1';
                 else
@@ -83,7 +107,12 @@ begin
 
         when "101" =>  --ACC >> 1
             cuenta <= a_in(wl-1 downto 1) & '0' ;
-            --c_Temp <= ;
+            --cuenta <= (a_in(wl-1 downto 1) sll 1);
+           if (b_in > not(a_in)) then
+                    c_Temp <= '1';
+                else
+                    c_Temp <= '0'; 
+                end if ; 
                 if (cuenta = (a_in and not(a_in))) then
                     z_temp <= '1';
                 else
@@ -94,9 +123,9 @@ begin
             cuenta <= a_in + b_in;
                
                 if (b_in > not(a_in)) then
-                    c_Temp: <= '1';
+                    c_Temp <= '1';
                 else
-                    c_Temp: <= '0'; 
+                    c_Temp <= '0'; 
                 end if ;    
                 
                 if (cuenta = (a_in and not(a_in))) then
@@ -109,9 +138,9 @@ begin
             cuenta <= b_in;
                     
                 if (b_in > not(a_in)) then
-                    c_Temp: <= '1';
+                    c_Temp <= '1';
                 else
-                    c_Temp: <= '0'; 
+                    c_Temp <= '0'; 
                 end if ;    
                 
                 if (cuenta = (a_in and not(a_in))) then
@@ -121,10 +150,10 @@ begin
                 end if ;
         
         when others =>
-        cuenta <= '0000000000'
+        cuenta <= (others => '0');
     end case ; 
     end process;
-    cuenta <= F;
-    c_Temp <= c;
-    z_temp <= z;
+	  F <= cuenta ;
+     c <= c_Temp ;
+     z <= z_temp ;
 end architecture ;

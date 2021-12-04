@@ -7,7 +7,7 @@ library ieee ;
 
 entity reg_SP is
     generic(
-        generic wl:integer:=8
+        wl:integer:=8
     );
   port (
     clk:        in std_logic;
@@ -16,7 +16,7 @@ entity reg_SP is
     sp_inc:     in std_logic;
     sp_dec:     in std_logic;
     sp_din:     in std_logic_vector (wl-1 downto 0);
-    sp_dout:    out std_logic_vector((wl-1 downto 0);
+    sp_dout:    out std_logic_vector((wl-1 downto 0)
   ) ;
 end reg_SP ; 
 
@@ -38,5 +38,5 @@ begin
                 end if ;
         end if ;
     end process;
-    sp_dout <= cuenta;                 
+    sp_dout <= cuenta;            
 end architecture ;

@@ -9,8 +9,8 @@ entity reg_MAR is
         wl: integer:=8
     );
   port (
-    clk:        in std_logic_vector(wl-1 downto 0);
-    mar_in:     in std_logic;
+    clk:        in std_logic;
+    mar_in:     in std_logic_vector(wl-1 downto 0);
     mar_ce:     in std_logic;
     mar_arst:   in std_logic;
     mar_out:    out std_logic_vector(wl-1 downto 0)
@@ -30,12 +30,12 @@ begin
             when others => 
                 if (rising_edge(clk)) then
                     if (mar_ce = '1') then
-                        cuenta <= mar_in
+                        cuenta <= mar_in;
                     else
-                        cuenta <= cuenta (others => '0');
+                        cuenta <=(others => '0');
                     end if ;
                 end if ;
         end case;
-    end process
+    end process;
     mar_out <= cuenta;
 end architecture ;

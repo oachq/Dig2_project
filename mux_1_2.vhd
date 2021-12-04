@@ -19,7 +19,7 @@ architecture arch of MUX_1_2 is
 begin
   process(mux2_in0, mux2_in1, mux2_S0)
   begin
-    case( mux_s0  ) is
+    case( mux2_s0  ) is
       
       when '0' =>
         cuenta <= mux2_in0;

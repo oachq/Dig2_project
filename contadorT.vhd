@@ -5,6 +5,7 @@ library ieee ;
     use IEEE.std_logic_unsigned.all;
 
 entity reg_contadorT is
+    generic (wl: integer:= 4);
   port (
     clk:        in std_logic;
     regC_arst:    in std_logic;
@@ -16,7 +17,7 @@ end reg_contadorT ;
 architecture arch of reg_contadorT is
 signal cuenta: std_logic_vector(wl-1 downto 0);
 begin
-    process(clk,arst)
+    process(clk, regC_arst, regC_srst)
         begin
             if (regC_arst='1') then
                 cuenta <= (others => '0');

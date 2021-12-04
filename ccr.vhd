@@ -39,6 +39,6 @@ begin
                 end if ;
         end case ;
     end process;
-    ccrC_temp <= ccrC_out;
-    ccrZ_temp <= ccrZ_out;             
+     ccrC_out <= ccrC_temp;
+     ccrZ_out <= ccrZ_temp;             
 end architecture ;

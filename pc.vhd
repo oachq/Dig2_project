@@ -26,16 +26,16 @@ architecture arch of reg_PC is
             if (pc_arst='1') then 
                     --pc_dout <= (others => '0'); // se sustituye por var temporal
                     cuenta <= (others => '0');
-                elsif (rising_edge(clk))
-                    if(pc_inc='1') then 
+                elsif (rising_edge(clk)) then
+							if(pc_inc='1') then 
                         cuenta <= cuenta + '1';
-                    end if;
+							end if;
                 if (pc_ce='1') then
                     cuenta <= pc_din;
                 end if; 
             end if;
         end process;
-        pc_dout <= cuenta;        
+        pc_dout <= cuenta;  
 end architecture ;
 
 

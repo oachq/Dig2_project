@@ -6,12 +6,14 @@ library ieee ;
 
 entity MUX_3 is
   generic(
-      wl: integer:= 8
-  )
+      wl: integer:= 4
+  );
   port (
-    mux3_in01:   in std_logic_vector(wl-1 downto 0); --entradas Dlec, Acc
-    mux3_in23:   in std_logic_vector(wl-1 downto 0); --entradas pcH, pcL
-    mux3_ce:   in std_logic
+    mux3_in0:   in std_logic_vector(wl-1 downto 0);   
+    mux3_in1:   in std_logic_vector(wl-1 downto 0);   
+    mux3_in2:   in std_logic_vector(wl-1 downto 0);   
+    mux3_in3:   in std_logic_vector(wl-1 downto 0);   
+    mux3_s:    in std_logic_vector(1 downto 0);
     mux3_out:  out std_logic_vector(wl-1 downto 0)
   ) ;
 end MUX_3 ; 
@@ -19,15 +21,21 @@ end MUX_3 ;
 architecture arch of MUX_3 is
   signal cuenta: std_logic_vector(wl-1 downto 0);
 begin
-  process(mux_ce, mux3_in01, mux3_in23)
+  process(mux3_s, mux3_in0, mux3_in1, mux3_in2, mux3_in3)
   begin
-    case( mux3_ce ) is
+    case( mux3_s ) is
     
-      when '0' =>
-        cuenta <= mux3_in01;
+      when '00' => -- ACC
+        cuenta <= mux3_in0;
+      
+      when '01' => -- Dlec
+        cuenta <= mux3_in1;
     
-      when others =>
-        cuenta <= mux3_in23;
+      when '10' => -- PCL
+        cuenta <= mux3_in2;
+
+      when others => --PCH
+        cuenta <= mux3_in3;
     end case ;
   end process;
   mux3_out <= cuenta;  
