@@ -18,13 +18,13 @@ library ieee ;
  
 entity alu is
     generic (
-        wl: integer:=4
+        wl: integer:=8
     );
   port (
     a_in:     in    std_logic_vector(wl-1 downto 0);-- entrada ACC
     b_in:     in    std_logic_vector(wl-1 downto 0);-- entrada MBR o regPipo
     s:        in    std_logic_vector(2 downto 0); -- selectores 
-    F:        out   std_logic_vector(7 downto 0);-- salida alu
+    F:        out   std_logic_vector(wl-1 downto 0);-- salida alu
     c,z:      out   std_logic -- banderas c= carry, z= zeros
     ) ;
 end alu ; 
@@ -33,20 +33,12 @@ architecture arch of alu is
     signal cuenta :         std_logic_vector(wl-1 downto 0);
     --signal corrimiento: std_logic_vector(wl downto 0);
 begin
-    process(a_in, b_in, s )
+    process(a_in, b_in, s, cuenta )
     begin
-
-    case( s ) is
-    
-        when "010" =>  --ACC OR MBR
+        if (s = "010") then
             cuenta <= a_in or b_in;
             c <= '0';
-
-        when others =>
-        --cuenta <= b_in;
-        --c <= '0';
-    end case ; 
-   
+        end if ;
     if (cuenta = "00000000") then
         z <= '1';
     else

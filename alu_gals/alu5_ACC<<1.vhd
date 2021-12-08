@@ -18,7 +18,7 @@ library ieee ;
  
 entity alu is
     generic (
-        wl: integer:=4
+        wl: integer:=8
     );
   port (
     a_in:     in    std_logic_vector(wl-1 downto 0);-- entrada ACC
@@ -33,20 +33,14 @@ architecture arch of alu is
     signal cuenta :         std_logic_vector(wl-1 downto 0);
     signal corrimiento: std_logic_vector(wl downto 0);
 begin
-    process(a_in, b_in, s )
+    process(a_in, b_in, s, cuenta )
     begin
-
-    case( s ) is
-        when "100" =>  --ACC << 1
+        if (s="100") then
             corrimiento <= '0' & a_in(wl-1 downto 1); -- 8bits
             --cuenta <= a_in(wl-1 downto 1) srl 1;
             cuenta <= corrimiento(wl downto 1 );
             c <= corrimiento(0); -- << 0 o 1 segun el resul 
-        when others =>
-        --cuenta <= b_in;
-        --c <= '0';
-    end case ; 
-   
+        end if ;
     if (cuenta = "00000000") then
         z <= '1';
     else
