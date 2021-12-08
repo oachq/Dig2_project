@@ -24,7 +24,7 @@ entity alu is
     a_in:     in    std_logic_vector(wl-1 downto 0);-- entrada ACC
     b_in:     in    std_logic_vector(wl-1 downto 0);-- entrada MBR o regPipo
     s:        in    std_logic_vector(2 downto 0); -- selectores 
-    F:        out   std_logic_vector(wl-1 downto 0);-- salida alu
+    F:        out   std_logic_vector(wl downto 0);-- salida alu
     c,z:      out   std_logic -- banderas c= carry, z= zeros
     ) ;
 end alu ; 
@@ -36,9 +36,9 @@ begin
     process(a_in, b_in, s, cuenta )
     begin
         if (s="100") then -- ACC << 1
-            corrimiento <= '0' & a_in(wl-1 downto 1); -- 8bits
+            corrimiento <= '0' & a_in; -- 8bits
             --cuenta <= a_in(wl-1 downto 1) srl 1;
-            cuenta <= corrimiento(wl downto 1 );
+            cuenta <= corrimiento(wl-1 downto 1 );
             c <= corrimiento(0); -- << 0 o 1 segun el resul 
         end if ;
     if (cuenta = "00000000") then

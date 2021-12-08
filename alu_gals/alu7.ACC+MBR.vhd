@@ -35,7 +35,7 @@ architecture arch of alu is
 begin
     process(a_in, b_in, s )
     begin
-        if s="110") then --ACC + MBR
+        if (s="110") then --ACC + MBR
             cuenta <= a_in + b_in;
                 if (cuenta < a_in or cuenta < b_in) or (a_in(wl-1)='1' and b_in(wl-1)='1') then
                     c <= '1';
