@@ -18,7 +18,7 @@ library ieee ;
  
 entity alu is
     generic (
-        wl: integer:=8
+        wl: integer:=4
     );
   port (
     a_in:     in    std_logic_vector(wl-1 downto 0);-- entrada ACC
