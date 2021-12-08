@@ -17,13 +17,11 @@ entity UC is
     Xs_out: inout std_logic_vector(9 downto 0)
   ) ;
 end UC ; 
---:= (others => '0' )
+
 architecture arch of UC is
 
     signal control : std_logic_vector(7 downto 0);  -- control de entradas
     signal  x10, x11, x12, x13, x14, x15, x16, x17, x19, x20:  std_logic;
-    --signal xs: std_logic_vector(wl_Xs downto 0); -- array salida xs
-    --signal flags: std_logic_vector(1 downto 0);-- entradas banderas
 begin
    control <= q_in & t_in; -- concatenando entradas q y t
 
@@ -68,7 +66,6 @@ begin
                 x15 <= '0';
                 x16 <= '0';
                 x17 <= '0';
-
                 x19 <= '0';
                 x20 <= '0';    
                 
@@ -82,7 +79,6 @@ begin
                 x15 <= '0';
                 x16 <= '0';
                 x17 <= '0';
-
                 x19 <= '0';
                 x20 <= '0';  
                 
@@ -96,7 +92,6 @@ begin
                 x15 <= '0';
                 x16 <= '0';
                 x17 <= '0';
-
                 x19 <= '0';
                 x20 <= '0';   
 
@@ -110,7 +105,6 @@ begin
                 x15 <= '1';
                 x16 <= '1';
                 x17 <= '1';
-
                 x19 <= '1';
                 x20 <= '0'; 
             
@@ -2004,5 +1998,3 @@ begin
     Xs_out <=  x20 & x19 & x17 & x16 & x15 & x14 & x13 & x12 & x11 & x10;
    
 end architecture ;
-
-
