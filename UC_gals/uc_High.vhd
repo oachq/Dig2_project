@@ -12,7 +12,7 @@ entity UC is
   port (
     q_in:   in  std_logic_vector(wl_Q-1 downto 0);
     t_in:   in  std_logic_vector(wl_T-1 downto 0);
-    c_in:   in  std_logic;
+    --c_in:   in  std_logic;
     z_in:   in  std_logic;
     Xs_out: out std_logic_vector(9 downto 0)
   ) ;
@@ -43,7 +43,6 @@ begin
                 x15 <= '0';
                 x16 <= '0';
                 x17 <= '0';
-
                 x19 <= '0';
                 x20 <= '0';
 
@@ -2008,7 +2007,7 @@ begin
         end case ;
            
     end process;
-   Xs_out <= x10 & x11 & x12 & x13 & x14 & x15 & x16 & x17 & x19 & x20;
+   Xs_out <=  x20 & x19 & x17 & x16 & x15 & x14 & x13 & x12 & x11 & x10;
 end architecture ;
 
 
