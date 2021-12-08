@@ -38,11 +38,6 @@ begin
         if (s = "001") then --ACC and MBR  
             cuenta <= a_in and b_in;
             c <= '0';
-            if (cuenta ="111111110") then
-                c='1';
-            else
-                c='0';
-            end if ;
         end if ;
     if (cuenta = "00000000") then
         z <= '1';
@@ -50,6 +45,6 @@ begin
         z <= '0';    
     end if ;
 end process;  
-	  F <= cuenta(wl-1 downto 0) ;
-      --c <= cuenta(8)
+	  F <= cuenta;
+
 end architecture ;
