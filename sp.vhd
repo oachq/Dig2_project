@@ -16,14 +16,15 @@ entity reg_SP is
     sp_inc:     in std_logic;
     sp_dec:     in std_logic;
     sp_din:     in std_logic_vector (wl-1 downto 0);
-    sp_dout:    out std_logic_vector((wl-1 downto 0)
+    sp_dout:    out std_logic_vector(wl-1 downto 0)
   ) ;
 end reg_SP ; 
 
 architecture arch of reg_SP is
 signal cuenta: std_logic_vector(wl-1 downto 0);
 begin
-    process(clk, sp_arst);
+    process(clk, sp_arst)
+    begin
         if (sp_arst='1') then
             cuenta <= (others => '0');
             elsif rising_edge(clk) then
@@ -31,7 +32,7 @@ begin
                     cuenta <= cuenta + '1';
                 end if ;
                 if (sp_dec='1') then
-                    cuenta <= - '1';
+                    cuenta <= cuenta - '1';
                 end if ;
                 if (sp_ce = '1') then
                     cuenta <= sp_din;
