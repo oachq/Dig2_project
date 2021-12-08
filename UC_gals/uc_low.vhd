@@ -13,7 +13,7 @@ entity UC is
     q_in:   in  std_logic_vector(wl_Q-1 downto 0);
     t_in:   in  std_logic_vector(wl_T-1 downto 0);
     c_in:   in  std_logic;
-  --  z_in:   in  std_logic;
+    z_in:   in  std_logic;
     Xs_out: out std_logic_vector(9 downto 0) -- x4 no se activa en low
     --x0, x1, x2, x3, x4, x5, x6, x7, x8, x9: out std_logic
   ) ;
@@ -1989,7 +1989,7 @@ when others => -- reset
         end case ;
            
     end process;
-   Xs_out <= x9 & x8 & x7 & x6 & x5 & x4 & x3 & x2 & x1 & & x0 ;
+   Xs_out <= x9 & x8 & x7 & x6 & x5 & x4 & x3 & x2 & x1 & x0 ;
 end architecture ;
 
 

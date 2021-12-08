@@ -30,14 +30,14 @@ entity alu is
 end alu ; 
 
 architecture arch of alu is
-    signal cuenta :         std_logic_vector(wl-1 downto 0);
+    signal cuenta :         std_logic_vector(wl downto 0);
     --signal corrimiento: std_logic_vector(wl downto 0);
 begin
     process(a_in, b_in, s, cuenta )
     begin
         if (s = "001") then --ACC and MBR  
             cuenta <= a_in and b_in;
-            c <= '0';
+            c <= cuenta(8);
         end if ;
     if (cuenta = "00000000") then
         z <= '1';
@@ -45,5 +45,5 @@ begin
         z <= '0';    
     end if ;
 end process;  
-	  F <= cuenta ;
+	  F <= cuenta(wl-1 downto 0) ;
 end architecture ;

@@ -35,7 +35,7 @@ architecture arch of alu is
 begin
     process(a_in, b_in, s, cuenta )
     begin
-        if (s="100") then
+        if (s="100") then -- ACC << 1
             corrimiento <= '0' & a_in(wl-1 downto 1); -- 8bits
             --cuenta <= a_in(wl-1 downto 1) srl 1;
             cuenta <= corrimiento(wl downto 1 );
