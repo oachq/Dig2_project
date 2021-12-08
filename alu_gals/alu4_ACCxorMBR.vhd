@@ -44,7 +44,7 @@ begin
 
         when others =>
         --cuenta <= b_in;
-        c <= '0';
+        --c <= '0';
     end case ; 
    
     if (cuenta = "00000000") then
