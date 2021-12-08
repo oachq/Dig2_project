@@ -7,15 +7,14 @@ library ieee ;
 entity UC is
     generic (
         wl_Q:   integer:= 4;
-        wl_T:   integer:= 4;
-        wl_Xs:  integer:= 20
+        wl_T:   integer:= 4
     );
   port (
     q_in:   in  std_logic_vector(wl_Q-1 downto 0);
     t_in:   in  std_logic_vector(wl_T-1 downto 0);
     c_in:   in  std_logic;
     z_in:   in  std_logic;
-    Xs_out: out std_logic_vector(wl_Xs downto 0)
+    Xs_out: out std_logic_vector(9 downto 0)
   ) ;
 end UC ; 
 --:= (others => '0' )
