@@ -7,9 +7,9 @@ library ieee ;
 entity reg_contadorT is
     generic (wl: integer:= 4);
   port (
-    clk:        in std_logic;
+    clk:          in std_logic;
     regC_arst:    in std_logic;
-    regC_srst:      in std_logic;
+    regC_srst:    in std_logic;
     regC_dout:    out std_logic_vector(wl-1 downto 0)
     ) ;
 end reg_contadorT ; 

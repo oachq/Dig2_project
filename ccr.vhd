@@ -27,7 +27,7 @@ begin
                 ccrC_temp <= '0';
                 ccrZ_temp <= '0';
         
-            when others =>
+            when '0' => 
                 if (rising_edge(clk)) then
                     if (ccr_ce = '1') then
                         ccrC_temp <= ccrC_in;
@@ -37,6 +37,9 @@ begin
                         ccrZ_temp <= '0';
                     end if ;
                 end if ;
+            when others =>
+            ccrC_temp <= '0';
+            ccrZ_temp <= '0';
         end case ;
     end process;
      ccrC_out <= ccrC_temp;
