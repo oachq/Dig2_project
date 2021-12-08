@@ -24,7 +24,6 @@ entity alu is
     a_in:     in    std_logic_vector(wl-1 downto 0);-- entrada ACC
     b_in:     in    std_logic_vector(wl-1 downto 0);-- entrada MBR o regPipo
     s:        in    std_logic_vector(2 downto 0); -- selectores 
-    --Cin:      in    std_logic; -- carry de entrada
     F:        out   std_logic_vector(wl-1 downto 0);-- salida alu
     c,z:      out   std_logic -- banderas c= carry, z= zeros
     ) ;
@@ -32,128 +31,59 @@ end alu ;
 
 architecture arch of alu is
     signal cuenta :         std_logic_vector(wl-1 downto 0);
-    signal c_Temp, z_temp:  std_logic; 
+    signal corrimiento: std_logic_vector(wl downto 0);
 begin
-    process(a_in, b_in, s, )
+    process(a_in, b_in, s )
     begin
 
     case( s ) is
     
         when "000" =>   --NOT ACC'
             cuenta <= not a_in;
-            C_temp <= '0';
-                if (cuenta = (a_in and not(a_in))) then -- cehcar error del if 
-                    z_temp <= '1';
-                else
-                    z_temp <= '0';
-                end if ;
+            c <= '0';
 
         when "001" => --ACC and MBR  
             cuenta <= a_in and b_in;
-            if (b_in > not(a_in)) then
-                c_Temp <= '1';
-            else
-                c_Temp <= '0'; 
-            end if ; 
-            
-                if (cuenta = (a_in and not(a_in))) then
-                    z_temp <= '1';
-                else
-                    z_temp <= '0';
-                end if ;
+            c <= '0';
 
         when "010" =>  --ACC OR MBR
             cuenta <= a_in or b_in;
-            if (b_in > not(a_in)) then
-                c_Temp <= '1';
-            else
-                c_Temp <= '0'; 
-            end if ; 
-
-                if (cuenta = (a_in and not(a_in))) then
-                    z_temp <= '1';
-                else
-                    z_temp <= '0';
-                end if ;
+            c <= '0';
 
         when "011" =>  --ACC XOR MBR
             cuenta <= a_in xor b_in;
-            if (b_in > not(a_in)) then
-                c_Temp <= '1';
-            else
-                c_Temp <= '0'; 
-            end if ; 
-
-                if (cuenta = (a_in and not(a_in))) then
-                    z_temp <= '1';
-                else
-                    z_temp <= '0';
-                end if ;
+            c <= '0';
 
         when "100" =>  --ACC << 1
-            cuenta <= '0' & a_in(wl-1 downto 1);
+            corrimiento <= '0' & a_in(wl-1 downto 1); -- 8bits
             --cuenta <= a_in(wl-1 downto 1) srl 1;
-            if (b_in > not(a_in)) then
-                c_Temp <= '1';
-            else
-                c_Temp <= '0'; 
-            end if ; 
-
-                if (cuenta = (a_in and not(a_in))) then
-                    z_temp <= '1';
-                else
-                    z_temp <= '0';
-                end if ;
+            cuenta <= corrimiento(wl downto 1 );
+            c <= corrimiento(0); -- << 0 o 1 segun el resul 
 
         when "101" =>  --ACC >> 1
-            cuenta <= a_in(wl-1 downto 1) & '0' ;
+            corrimiento <= a_in(wl-1 downto 1) & '0' ; --8bits
             --cuenta <= (a_in(wl-1 downto 1) sll 1);
-           if (b_in > not(a_in)) then
-                    c_Temp <= '1';
-                else
-                    c_Temp <= '0'; 
-                end if ; 
-                if (cuenta = (a_in and not(a_in))) then
-                    z_temp <= '1';
-                else
-                    z_temp <= '0';
-                end if ;
-
+            cuenta <= corrimiento(wl-1 downto 0);
+            c <= corrimiento(8); -- 0 o 1 segun el resul >>
+           
         when "110" =>  --ACC + MBR
             cuenta <= a_in + b_in;
-               
-                if (b_in > not(a_in)) then
-                    c_Temp <= '1';
+                if (cuenta < a_in or cuenta < b_in) or (a_in(wl-1)='1' and b_in(wl-1)='1') then
+                    c <= '1';
                 else
-                    c_Temp <= '0'; 
-                end if ;    
-                
-                if (cuenta = (a_in and not(a_in))) then
-                    z_temp <= '1';
-                else
-                    z_temp <= '0';
-                end if ;
+                    c <= '0';
+                end if;   
 
-        when "111" =>  --ACC + MBR
-            cuenta <= b_in;
-                    
-                if (b_in > not(a_in)) then
-                    c_Temp <= '1';
-                else
-                    c_Temp <= '0'; 
-                end if ;    
-                
-                if (cuenta = (a_in and not(a_in))) then
-                    z_temp <= '1';
-                else
-                    z_temp <= '0';
-                end if ;
-        
         when others =>
-        cuenta <= (others => '0');
+        cuenta <= b_in;
+        c <= '0';
     end case ; 
-    end process;
+   
+    if (cuenta = "00000000") then
+        z <= '1';
+    else
+        z <= '0';    
+    end if ;
+end process;  
 	  F <= cuenta ;
-     c <= c_Temp ;
-     z <= z_temp ;
 end architecture ;
