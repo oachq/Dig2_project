@@ -17,26 +17,19 @@ entity reg_CCR is
 end reg_CCR ; 
 
 architecture arch of reg_CCR is
-    signal ccrC_temp, ccrZ_temp : std_logic;
+    signal ccrC_temp : std_logic; 
+    signal ccrZ_temp : std_logic;
 begin
-    process (clk, ccrC_in, ccrZ_in, ccr_ce, ccr_arst)
+    process (clk, ccr_ce, ccr_arst)
     begin
-        case( ccr_arst ) is
-            
+        case( ccr_ce ) is
             when '1' =>
-                ccrC_temp <= '0';
-                ccrZ_temp <= '0';
-        
-            when '0' => 
+            if (ccr_arst='1') then
                 if (rising_edge(clk)) then
-                    if (ccr_ce = '1') then
                         ccrC_temp <= ccrC_in;
                         ccrZ_temp <= ccrZ_in;
-                    else
-                        ccrC_temp <= '0';
-                        ccrZ_temp <= '0';
-                    end if ;
                 end if ;
+            end if ;
             when others =>
             ccrC_temp <= '0';
             ccrZ_temp <= '0';
