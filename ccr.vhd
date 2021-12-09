@@ -17,7 +17,7 @@ end reg_CCR ;
 
 architecture arch of reg_CCR is
     signal flags : std_logic_vector(1 downto 0); 
-    --signal ccrZ_temp : std_logic;
+   
 begin
     process (clk, ccr_ce, ccr_arst)
     begin
@@ -28,7 +28,7 @@ begin
                     ccrC_out <= ccr_in(1);
                 end if ;
             else
-                flgas <= "00";
+                flags <= "00";
             end if ;
         end if ;
     end process;
