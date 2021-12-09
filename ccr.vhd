@@ -3,41 +3,38 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity CCR is
-    Port ( CCRCIn : in  STD_LOGIC;
-	        CCRZIn : in  STD_LOGIC;
-           CE : in  STD_LOGIC; 
-           CLK : in  STD_LOGIC;
-			  RESET : in  STD_LOGIC; --Reset Asincrono
-			  CCRCOut : out  STD_LOGIC;
-           CCRZOut : out  STD_LOGIC); 
-end CCR;
+entity ccr is
+port(
 
-architecture Behavioral of CCR is
-	SIGNAL TempCCRCOut : STD_LOGIC := '0';
-	SIGNAL TempCCRZOut : STD_LOGIC := '0';
+sal_alu: in std_logic_vector (1 downto 0);--- recibe de la alu 2 bits
+ce: 	 in std_logic;--- linea de activacion
+flags: OUT std_logic_vector (1 downto 0);--- manda las flags ala UC
+cout:	 OUT std_logic; ---- Carry de salida
+clk: 	in std_logic;
+arst:	in std_logic---- pos el reset
+
+);
+end ccr;
+
+
+architecture behavioral of ccr is
 begin
-	CCRCOut <= TempCCRCOut;
-	CCRZOut <= TempCCRZOut;
-	
-	PROCESS (CLK, CCRCIn,CCRZIn , CE, RESET) 
-	BEGIN
-		CASE RESET IS
-			WHEN '1' =>
-				TempCCRCOut <= '0';
-				TempCCRZOut <= '0';
-				
-			WHEN OTHERS =>
-				IF RISING_EDGE(CLK) THEN
-				IF (CE = '1') THEN
-					TempCCRCOut <= CCRCIn;
-					TempCCRZOut <= CCRZIn;
-				ELSE
-					TempCCRCOut <= TempCCRCOut;
-					TempCCRZOut <= TempCCRZOut;
-				END IF;
-			   END IF;
-			END CASE;
-		END PROCESS;
-end Behavioral;
+	process(clk,arst,ce)
+	begin
+	if ce='1' then
+			if arst='1' then
+				if rising_edge(clk) then
+					flags<=sal_alu;
+					cout<=sal_alu(1);
 
+				end if;
+				else
+				flags<="00";
+				cout<='0';
+
+			end if;
+			end if;
+
+
+	end process;
+	end behavioral;
